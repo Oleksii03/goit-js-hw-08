@@ -21,7 +21,7 @@ const fillContactFormFields = () => {
 
 fillContactFormFields();
 
-const onContactFormItemChange = event => {
+const onContactFormItem = event => {
   const { target } = event;
 
   const name = target.name;
@@ -39,5 +39,5 @@ const onContactFormSubmit = event => {
   localStorage.removeItem('feedback-form-state');
 };
 
-contactFormEl.addEventListener('input', onContactFormItemChange);
+contactFormEl.addEventListener('input', throttle(onContactFormItem, 500));
 contactFormEl.addEventListener('submit', onContactFormSubmit);
