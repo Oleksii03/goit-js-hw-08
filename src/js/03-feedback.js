@@ -39,5 +39,5 @@ const onContactFormSubmit = event => {
   localStorage.removeItem('userData');
 };
 
-contactFormEl.addEventListener('input', throttle(validateForm, 500), onContactFormItemChange);
+contactFormEl.addEventListener('input', onContactFormItemChange);
 contactFormEl.addEventListener('submit', onContactFormSubmit);
