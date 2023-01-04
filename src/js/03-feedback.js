@@ -5,7 +5,7 @@ const userInfo = {};
 
 const fillContactFormFields = () => {
   try {
-    const userInfoFromLS = JSON.parse(localStorage.getItem('userData'));
+    const userInfoFromLS = JSON.parse(localStorage.getItem('feedback-form-state'));
 
     if (userInfoFromLS === null) {
       return;
@@ -29,14 +29,14 @@ const onContactFormItemChange = event => {
 
   userInfo[name] = value;
 
-  localStorage.setItem('userData', JSON.stringify(userInfo));
+  localStorage.setItem('feedback-form-state', JSON.stringify(userInfo));
 };
 
 const onContactFormSubmit = event => {
   event.preventDefault();
 
   contactFormEl.reset();
-  localStorage.removeItem('userData');
+  localStorage.removeItem('feedback-form-state');
 };
 
 contactFormEl.addEventListener('input', onContactFormItemChange);
