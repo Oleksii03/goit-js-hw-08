@@ -1,43 +1,27 @@
 import throttle from 'lodash.throttle';
 
-const contactFormEl = document.querySelector('.feedback-form');
-const userInfo = {};
+const LOCALSTORAGE_KEY = 'feedback-form-state';
+const formEl = document.querySelector('.feedback-form');
 
-const fillContactFormFields = () => {
-  try {
-    const userInfoFromLS = JSON.parse(localStorage.getItem('feedback-form-state'));
+initForm();
 
-    if (userInfoFromLS === null) {
-      return;
-    }
+formEl.addEventListener('submit', () => {
+  localStorage.removeItem(LOCALSTORAGE_KEY);
+});
 
-    for (const prop in userInfoFromLS) {
-      contactFormEl.elements[prop].value = userInfoFromLS[prop];
-    }
-  } catch (err) {
-    console.log(err);
+formEl.addEventListener('input', evt => {
+  let userInfoFromLS = localStorage.getItem(LOCALSTORAGE_KEY);
+  userInfoFromLS = userInfoFromLS ? JSON.parse(userInfoFromLS) : {};
+  userInfoFromLS[evt.target.name] = evt.target.value;
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(userInfoFromLS));
+});
+
+function initForm() {
+  let userInfoFromLS = localStorage.getItem(LOCALSTORAGE_KEY);
+  if (userInfoFromLS) {
+    userInfoFromLS = JSON.parse(userInfoFromLS);
+    Object.entries(userInfoFromLS).forEach(([name, value]) => {
+      formEl.elements[name].value = value;
+    });
   }
 };
-
-fillContactFormFields();
-
-const onContactFormItem = event => {
-  const { target } = event;
-
-  const name = target.name;
-  const value = target.value;
-
-  userInfo[name] = value;
-
-  localStorage.setItem('feedback-form-state', JSON.stringify(userInfo));
-};
-
-const onContactFormSubmit = event => {
-  event.preventDefault();
-
-  contactFormEl.reset();
-  localStorage.removeItem('feedback-form-state');
-};
-
-contactFormEl.addEventListener('input', throttle(onContactFormItem, 500));
-contactFormEl.addEventListener('submit', onContactFormSubmit);
