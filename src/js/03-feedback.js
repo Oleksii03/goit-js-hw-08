@@ -5,11 +5,12 @@ const formEl = document.querySelector('.feedback-form');
 
 initForm();
 
-formEl.addEventListener('submit', event => {
-  event.preventDefault();
-  const formData = new FormData(formEl);
-  formData.forEach((name, value) => console.log(name, value)); 
+formEl.addEventListener('submit', evt => {
   localStorage.removeItem(LOCALSTORAGE_KEY);
+  const formData = new FormData(formEl);
+  formData.forEach((value, name) => console.log(value, name));
+  evt.preventDefault();
+  evt.currentTarget.reset();
 });
 
 formEl.addEventListener('input', throttle((evt) => {
