@@ -8,7 +8,8 @@ initForm();
 formEl.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(formEl);
-  formData.forEach((name, value) => console.log(name, value)); localStorage.removeItem(LOCALSTORAGE_KEY);
+  formData.forEach((name, value) => console.log(name, value)); 
+  localStorage.removeItem(LOCALSTORAGE_KEY);
 });
 
 formEl.addEventListener('input', throttle((evt) => {
