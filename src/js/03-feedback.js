@@ -9,12 +9,12 @@ formEl.addEventListener('submit', () => {
   localStorage.removeItem(LOCALSTORAGE_KEY);
 });
 
-formEl.addEventListener('input', evt => {
+formEl.addEventListener('input', throttle((evt) => {
   let userInfoFromLS = localStorage.getItem(LOCALSTORAGE_KEY);
   userInfoFromLS = userInfoFromLS ? JSON.parse(userInfoFromLS) : {};
   userInfoFromLS[evt.target.name] = evt.target.value;
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(userInfoFromLS));
-});
+}, 500));
 
 function initForm() {
   let userInfoFromLS = localStorage.getItem(LOCALSTORAGE_KEY);
